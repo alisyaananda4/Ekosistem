@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPAS Kelas 5 SD - Harmoni dalam Ekosistem</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Comic Neue for friendly typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        eco: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        earth: {
+                            100: '#fef3c7',
+                            500: '#d97706',
+                            700: '#b45309',
+                            800: '#78350f'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        friendly: ['Comic Neue', 'cursive', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4fbf7;
+            user-select: none;
+        }
+        .font-friendly {
+            font-family: 'Comic Neue', cursive, sans-serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #16a34a;
+            border-radius: 4px;
+        }
+        /* Slide transitions */
+        .slide {
+            display: none;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+        .slide.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Card Hover Effects */
+        .card-interactive {
+            transition: all 0.3s ease;
+        }
+        .card-interactive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(22, 163, 74, 0.2);
+        }
+        /* Drag & Drop Visual Hints */
+        .draggable-item {
+            cursor: grab;
+            touch-action: none;
+        }
+        .draggable-item:active {
+            cursor: grabbing;
+        }
+        .drop-zone.hovered {
+            background-color: #bbf7d0 !important;
+            border-color: #16a34a !important;
+        }
+        /* Flip Card for Memory Game */
+        .memory-card {
+            perspective: 1000px;
+        }
+        .memory-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .memory-card.flipped .memory-card-inner {
+            transform: rotateY(180deg);
+        }
+        .memory-card-front, .memory-card-back {
+            backface-visibility: hidden;
+        }
+        .memory-card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-eco-200">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-white/90 backdrop-blur border-b border-eco-200 sticky top-0 z-50 px-4 py-3 shadow-sm">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-eco-600 text-white flex items-center justify-center font-bold text-xl shadow-md">
+                    🍃
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold text-eco-900 leading-tight">IPAS Kelas 5 SD</h1>
+                    <p class="text-xs text-eco-700 font-medium">Topik: Harmoni dalam Ekosistem</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-2 md:space-x-4">
+                <!-- Slide Indicator -->
+                <span id="slideIndicator" class="bg-eco-100 text-eco-800 text-xs md:text-sm font-semibold px-3 py-1.5 rounded-full border border-eco-300">
+                    Halaman 1 / 14
+                </span>
+
+                <!-- Home / Menu Quick Button -->
+                <button onclick="goToSlide(2)" title="Kembali ke Menu Utama" class="p-2 rounded-xl text-slate-600 hover:text-eco-700 hover:bg-eco-100 transition">
+                    <i class="fa-solid fa-house text-lg"></i>
+                </button>
+
+                <!-- Fullscreen Toggle Button -->
+                <button id="fullscreenBtn" onclick="toggleFullscreen()" title="Layar Penuh / Maximize" class="p-2 rounded-xl text-slate-600 hover:text-eco-700 hover:bg-eco-100 transition">
+                    <i class="fa-solid fa-expand text-lg" id="fullscreenIcon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Slide Container -->
+    <main class="flex-grow max-w-6xl w-full mx-auto p-4 md:p-6 my-2">
+        <div class="bg-white rounded-3xl shadow-xl border border-eco-100 p-4 md:p-8 min-h-[580px] flex flex-col justify-between relative overflow-hidden">
+            
+            <!-- SLIDE 1: COVER -->
+            <section id="slide-1" class="slide active my-auto">
+                <div class="text-center max-w-3xl mx-auto space-y-6">
+                    <div class="inline-block bg-eco-100 text-eco-800 text-sm font-bold px-4 py-1.5 rounded-full border border-eco-300">
+                        🌱 Modul Pembelajaran Interaktif Kurikulum Merdeka
+                    </div>
+                    
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-eco-900 leading-tight font-friendly">
+                        HARMONI DALAM EKOSISTEM
+                    </h1>
+                    
+                    <p class="text-slate-600 text-base md:text-lg">
+                        Mengenal Hubungan Saling Ketergantungan Antara Makhluk Hidup dan Lingkungannya
+                    </p>
+
+                    <!-- Large SVG Illustration -->
+                    <div class="w-full max-w-md mx-auto py-2">
+                        <svg viewBox="0 0 500 300" class="w-full h-auto drop-shadow-md" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background Hills -->
+                            <path d="M0 250 Q 120 180 250 240 T 500 220 L 500 300 L 0 300 Z" fill="#86efac" />
+                            <path d="M0 270 Q 200 200 350 260 T 500 250 L 500 300 L 0 300 Z" fill="#22c55e" />
+                            <!-- Sun -->
+                            <circle cx="420" cy="70" r="40" fill="#fde047" />
+                            <circle cx="420" cy="70" r="48" fill="#fef08a" opacity="0.4" />
+                            <!-- Clouds -->
+                            <path d="M50 80 Q 65 60 85 70 Q 105 60 120 80 Q 130 100 100 100 L 60 100 Z" fill="#ffffff" />
+                            <path d="M220 100 Q 235 80 255 90 Q 275 80 290 100 Q 300 120 270 120 L 230 120 Z" fill="#ffffff" opacity="0.9"/>
+                            <!-- Trees -->
+                            <rect x="80" y="180" width="16" height="60" fill="#78350f" rx="4"/>
+                            <circle cx="88" cy="160" r="35" fill="#15803d" />
+                            <rect x="380" y="190" width="14" height="50" fill="#78350f" rx="4"/>
+                            <circle cx="387" cy="175" r="30" fill="#166534" />
+                            <!-- Pond -->
+                            <ellipse cx="250" cy="270" rx="90" ry="25" fill="#38bdf8" />
+                            <!-- Simple Animals / Plants Icons -->
+                            <text x="235" y="275" font-size="20">🐟</text>
+                            <text x="140" y="240" font-size="28">🐰</text>
+                            <text x="310" y="235" font-size="28">🦌</text>
+                            <text x="80" y="140" font-size="22">🦅</text>
+                            <text x="210" y="220" font-size="24">🌻</text>
+                        </svg>
+                    </div>
+
+                    <div class="bg-eco-50 border border-eco-200 p-4 rounded-2xl max-w-sm mx-auto shadow-sm">
+                        <p class="text-xs text-eco-700 font-semibold uppercase tracking-wider">Disusun Oleh:</p>
+                        <p class="text-lg font-bold text-eco-900 font-friendly">Alisya Ananda, S.Pd</p>
+                        <p class="text-xs text-slate-500">Guru IPAS Sekolah Dasar</p>
+                    </div>
+
+                    <div>
+                        <button onclick="goToSlide(2)" class="bg-eco-600 hover:bg-eco-700 text-white text-lg font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-200 flex items-center justify-center mx-auto space-x-3">
+                            <span>Mulai Belajar Sekarang</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 2: MENU UTAMA -->
+            <section id="slide-2" class="slide">
+                <div class="space-y-6">
+                    <div class="text-center">
+                        <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Peta Navigasi Materi</h2>
+                        <p class="text-slate-600 text-sm">Pilihlah topik atau aktivitas yang ingin kamu pelajari terlebih dahulu!</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                        <button onclick="goToSlide(3)" class="card-interactive bg-emerald-50 border border-emerald-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl">🎯</div>
+                            <div>
+                                <h3 class="font-bold text-emerald-900 text-sm md:text-base">Tujuan Belajar</h3>
+                                <p class="text-xs text-emerald-700">Target capaian modul</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(4)" class="card-interactive bg-blue-50 border border-blue-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center text-xl">🗺️</div>
+                            <div>
+                                <h3 class="font-bold text-blue-900 text-sm md:text-base">Peta Konsep</h3>
+                                <p class="text-xs text-blue-700">Bagan ringkasan topik</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(5)" class="card-interactive bg-green-50 border border-green-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-green-600 text-white flex items-center justify-center text-xl">📚</div>
+                            <div>
+                                <h3 class="font-bold text-green-900 text-sm md:text-base">Materi 1: Komponen</h3>
+                                <p class="text-xs text-green-700">Biotik & Abiotik</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(6)" class="card-interactive bg-amber-50 border border-amber-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl">🦁</div>
+                            <div>
+                                <h3 class="font-bold text-amber-900 text-sm md:text-base">Materi 2: Peran</h3>
+                                <p class="text-xs text-amber-700">Produsen s.d Pengurai</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(7)" class="card-interactive bg-teal-50 border border-teal-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-teal-600 text-white flex items-center justify-center text-xl">🌾</div>
+                            <div>
+                                <h3 class="font-bold text-teal-900 text-sm md:text-base">Materi 3: Rantai Makanan</h3>
+                                <p class="text-xs text-teal-700">Aliran energi ekosistem</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(8)" class="card-interactive bg-lime-50 border border-lime-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-lime-600 text-white flex items-center justify-center text-xl">⚖️</div>
+                            <div>
+                                <h3 class="font-bold text-lime-900 text-sm md:text-base">Materi 4: Keseimbangan</h3>
+                                <p class="text-xs text-lime-700">Peran manusia & alam</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(9)" class="card-interactive bg-red-50 border border-red-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-red-500 text-white flex items-center justify-center text-xl">🎬</div>
+                            <div>
+                                <h3 class="font-bold text-red-900 text-sm md:text-base">Video Pembelajaran</h3>
+                                <p class="text-xs text-red-700">Tonton & pahami</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(10)" class="card-interactive bg-purple-50 border border-purple-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xl">🔬</div>
+                            <div>
+                                <h3 class="font-bold text-purple-900 text-sm md:text-base">Simulasi Ekosistem</h3>
+                                <p class="text-xs text-purple-700">Eksperimen populasi</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(11)" class="card-interactive bg-orange-50 border border-orange-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center text-xl">🎮</div>
+                            <div>
+                                <h3 class="font-bold text-orange-900 text-sm md:text-base">Mini Game Edukasi</h3>
+                                <p class="text-xs text-orange-700">5 Permainan seru</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(12)" class="card-interactive bg-yellow-50 border border-yellow-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-yellow-600 text-white flex items-center justify-center text-xl">📝</div>
+                            <div>
+                                <h3 class="font-bold text-yellow-900 text-sm md:text-base">Kuis Evaluasi</h3>
+                                <p class="text-xs text-yellow-700">Uji pemahamanmu</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(13)" class="card-interactive bg-indigo-50 border border-indigo-200 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xl">📌</div>
+                            <div>
+                                <h3 class="font-bold text-indigo-900 text-sm md:text-base">Rangkuman</h3>
+                                <p class="text-xs text-indigo-700">Poin penting materi</p>
+                            </div>
+                        </button>
+
+                        <button onclick="goToSlide(14)" class="card-interactive bg-slate-100 border border-slate-300 p-4 rounded-2xl text-left flex flex-col justify-between h-36">
+                            <div class="w-10 h-10 rounded-xl bg-slate-600 text-white flex items-center justify-center text-xl">📖</div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm md:text-base">Referensi & Penutup</h3>
+                                <p class="text-xs text-slate-600">Sumber rujukan</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: TUJUAN PEMBELAJARAN -->
+            <section id="slide-3" class="slide">
+                <div class="space-y-6">
+                    <div class="border-b border-eco-200 pb-3">
+                        <span class="text-xs font-bold text-eco-600 uppercase tracking-widest">Capaian Pembelajaran (Kurikulum Merdeka)</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Tujuan Pembelajaran</h2>
+                    </div>
+
+                    <p class="text-slate-600">Setelah mempelajari modul interaktif ini, peserta didik kelas 5 SD diharapkan dapat:</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                        <div class="bg-emerald-50 border border-emerald-200 p-6 rounded-2xl shadow-sm space-y-3">
+                            <div class="w-12 h-12 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-2xl font-bold">1</div>
+                            <h3 class="font-bold text-emerald-900 text-lg">Menganalisis Komponen</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Mengidentifikasi dan membedakan komponen <strong>Biotik</strong> (makhluk hidup) dan <strong>Abiotik</strong> (benda tak hidup) di lingkungan sekitar dengan tepat.
+                            </p>
+                        </div>
+
+                        <div class="bg-teal-50 border border-teal-200 p-6 rounded-2xl shadow-sm space-y-3">
+                            <div class="w-12 h-12 bg-teal-500 text-white rounded-2xl flex items-center justify-center text-2xl font-bold">2</div>
+                            <h3 class="font-bold text-teal-900 text-lg">Menyusun Rantai Makanan</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Mendeskripsikan peran produsen, konsumen, dan pengurai serta menyusun skema <strong>Rantai Makanan & Jaring-jaring Makanan</strong>.
+                            </p>
+                        </div>
+
+                        <div class="bg-lime-50 border border-lime-200 p-6 rounded-2xl shadow-sm space-y-3">
+                            <div class="w-12 h-12 bg-lime-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold">3</div>
+                            <h3 class="font-bold text-lime-900 text-lg">Menjaga Keseimbangan</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed">
+                                Memprediksi dampak perubahan lingkungan serta merumuskan upaya nyata manusia dalam <strong>menjaga keseimbangan ekosistem</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: PETA KONSEP -->
+            <section id="slide-4" class="slide">
+                <div class="space-y-6">
+                    <div class="border-b border-eco-200 pb-3">
+                        <span class="text-xs font-bold text-eco-600 uppercase tracking-widest">Struktur Topik</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Peta Konsep Ekosistem</h2>
+                    </div>
+
+                    <!-- Mindmap Diagram -->
+                    <div class="bg-eco-50 p-6 rounded-3xl border border-eco-200 overflow-x-auto">
+                        <div class="min-w-[650px] flex flex-col items-center space-y-6">
+                            <!-- Main Root Node -->
+                            <div class="bg-eco-700 text-white font-bold px-8 py-3 rounded-2xl shadow-md text-lg font-friendly border-2 border-eco-500">
+                                🌲 EKOSISTEM
+                            </div>
+
+                            <div class="w-1 h-6 bg-eco-400"></div>
+
+                            <!-- Branch Level 1 -->
+                            <div class="grid grid-cols-3 gap-6 w-full">
+                                <!-- Sub Node 1 -->
+                                <div class="flex flex-col items-center">
+                                    <div class="bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl text-center text-sm w-full shadow-sm">
+                                        1. Komponen Ekosistem
+                                    </div>
+                                    <div class="w-1 h-4 bg-emerald-400"></div>
+                                    <div class="bg-white p-3 rounded-xl border border-emerald-200 w-full text-xs space-y-1 shadow-xs">
+                                        <div class="text-emerald-800 font-semibold">• Komponen Biotik (Hidup)</div>
+                                        <div class="text-emerald-800 font-semibold">• Komponen Abiotik (Tak Hidup)</div>
+                                    </div>
+                                </div>
+
+                                <!-- Sub Node 2 -->
+                                <div class="flex flex-col items-center">
+                                    <div class="bg-amber-600 text-white font-bold px-4 py-2 rounded-xl text-center text-sm w-full shadow-sm">
+                                        2. Interaksi Makhluk Hidup
+                                    </div>
+                                    <div class="w-1 h-4 bg-amber-400"></div>
+                                    <div class="bg-white p-3 rounded-xl border border-amber-200 w-full text-xs space-y-1 shadow-xs">
+                                        <div class="text-amber-800 font-semibold">• Rantai Makanan</div>
+                                        <div class="text-amber-800 font-semibold">• Jaring-jaring Makanan</div>
+                                        <div class="text-amber-800 font-semibold">• Peran: Produsen/Konsumen</div>
+                                    </div>
+                                </div>
+
+                                <!-- Sub Node 3 -->
+                                <div class="flex flex-col items-center">
+                                    <div class="bg-teal-600 text-white font-bold px-4 py-2 rounded-xl text-center text-sm w-full shadow-sm">
+                                        3. Keseimbangan Lingkungan
+                                    </div>
+                                    <div class="w-1 h-4 bg-teal-400"></div>
+                                    <div class="bg-white p-3 rounded-xl border border-teal-200 w-full text-xs space-y-1 shadow-xs">
+                                        <div class="text-teal-800 font-semibold">• Faktor Alam & Manusia</div>
+                                        <div class="text-teal-800 font-semibold">• Upaya Pelestarian Alam</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: MATERI 1 - KOMPONEN EKOSISTEM -->
+            <section id="slide-5" class="slide">
+                <div class="space-y-6">
+                    <div class="border-b border-eco-200 pb-3 flex justify-between items-end">
+                        <div>
+                            <span class="text-xs font-bold text-eco-600 uppercase tracking-widest">Materi Inti 1/4</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Komponen Ekosistem</h2>
+                        </div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Biotik & Abiotik</span>
+                    </div>
+
+                    <p class="text-slate-700 leading-relaxed text-sm md:text-base">
+                        <strong>Ekosistem</strong> adalah tempat berlangsungnya hubungan timbal balik (interaksi) antara makhluk hidup dengan lingkungan sekitarnya. Ekosistem tersusun dari dua komponen utama:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Biotik Card -->
+                        <div class="bg-green-50 border-2 border-green-300 p-5 rounded-2xl space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🌿</span>
+                                <h3 class="text-xl font-bold text-green-900 font-friendly">1. Komponen Biotik</h3>
+                            </div>
+                            <p class="text-sm text-slate-600">
+                                Seluruh <strong>makhluk hidup</strong> yang ada di dalam ekosistem.
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-green-200 text-xs space-y-1">
+                                <p class="font-bold text-green-800">Contoh Nyata Sehari-hari:</p>
+                                <p class="text-slate-600">Rumput, pohon kelapa, ikan mas, katak, kupu-kupu, cacing tanah, dan manusia.</p>
+                            </div>
+                        </div>
+
+                        <!-- Abiotik Card -->
+                        <div class="bg-amber-50 border-2 border-amber-300 p-5 rounded-2xl space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">☀️</span>
+                                <h3 class="text-xl font-bold text-amber-900 font-friendly">2. Komponen Abiotik</h3>
+                            </div>
+                            <p class="text-sm text-slate-600">
+                                Seluruh <strong>benda tak hidup</strong> yang memengaruhi kehidupan di ekosistem.
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 text-xs space-y-1">
+                                <p class="font-bold text-amber-800">Contoh Nyata Sehari-hari:</p>
+                                <p class="text-slate-600">Cahaya matahari, air sungai, udara/oksigen, tanah, batu, dan suhu udara.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 6: MATERI 2 - PERAN MAKHLUK HIDUP -->
+            <section id="slide-6" class="slide">
+                <div class="space-y-6">
+                    <div class="border-b border-eco-200 pb-3 flex justify-between items-end">
+                        <div>
+                            <span class="text-xs font-bold text-eco-600 uppercase tracking-widest">Materi Inti 2/4</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Peran Makhluk Hidup</h2>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full">Tingkat Trofik</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Produsen -->
+                        <div class="bg-emerald-50 border border-emerald-300 p-4 rounded-2xl text-center space-y-2">
+                            <div class="text-4xl">🌱</div>
+                            <h3 class="font-bold text-emerald-900 text-lg">PRODUSEN</h3>
+                            <p class="text-xs text-slate-600">Makhluk hidup yang bisa membuat makanannya sendiri melalui **fotosintesis**.</p>
+                            <div class="bg-white p-2 rounded-lg text-xs font-medium text-emerald-800">
+                                Contoh: Padi, Rumput, Fitoplankton
+                            </div>
+                        </div>
+
+                        <!-- Konsumen -->
+                        <div class="bg-blue-50 border border-blue-300 p-4 rounded-2xl text-center space-y-2">
+                            <div class="text-4xl">🐰</div>
+                            <h3 class="font-bold text-blue-900 text-lg">KONSUMEN</h3>
+                            <p class="text-xs text-slate-600">Makhluk hidup yang memakan makhluk lain (Herbivora, Karnivora, Omnivora).</p>
+                            <div class="bg-white p-2 rounded-lg text-xs font-medium text-blue-800">
+                                Contoh: Kelinci, Ular, Elang
+                            </div>
+                        </div>
+
+                        <!-- Pengurai -->
+                        <div class="bg-amber-50 border border-amber-300 p-4 rounded-2xl text-center space-y-2">
+                            <div class="text-4xl">🍄</div>
+                            <h3 class="font-bold text-amber-900 text-lg">PENGURAI (Dekomposer)</h3>
+                            <p class="text-xs text-slate-600">Organisme yang menguraikan sisa bangkai menjadi zat hara tanah.</p>
+                            <div class="bg-white p-2 rounded-lg text-xs font-medium text-amber-800">
+                                Contoh: Jamur, Bakteri, Cacing
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: MATERI 3 - RANTAI MAKANAN -->
+            <section id="slide-7" class="slide">
+                <div class="space-y-5">
+                    <div class="border-b border-eco-200 pb-3 flex justify-between items-end">
+                        <div>
+                            <span class="text-xs font-bold text-eco-600 uppercase tracking-widest">Materi Inti 3/4</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Rantai & Jaring-jaring Makanan</h2>
+                        </div>
+                        <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">Aliran Energi</span>
+                    </div>
+
+                    <p class="text-xs md:text-sm text-slate-600">
+                        <strong>Rantai Makanan</strong> adalah proses makan dan dimakan antar makhluk hidup dengan urutan tertentu. Gabungan dari beberapa rantai makanan saling berhubungan dinamakan <strong>Jaring-jaring Makanan</strong>.
+                    </p>
+
+                    <!-- Food Chain Interactive Diagram -->
+                    <div class="bg-gradient-to-r from-emerald-50 via-teal-50 to-amber-50 p-4 rounded-2xl border border-teal-200">
+                        <h4 class="text-center text-xs font-bold text-teal-800 uppercase tracking-wider mb-3">Contoh Rantai Makanan di Sawah:</h4>
+                        <div class="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-center">
+                            <div class="bg-white p-3 rounded-xl border border-emerald-300 shadow-xs w-24">
+                                <div class="text-2xl">🌾</div>
+                                <div class="text-xs font-bold text-emerald-900">Padi</div>
+                                <div class="text-[10px] text-slate-500">Produsen</div>
+                            </div>
+
+                            <span class="text-teal-600 font-bold text-xl">➔</span>
+
+                            <div class="bg-white p-3 rounded-xl border border-emerald-300 shadow-xs w-24">
+                                <div class="text-2xl">🦗</div>
+                                <div class="text-xs font-bold text-emerald-900">Belalang</div>
+                                <div class="text-[10px] text-slate-500">Konsumen I</div>
+                            </div>
+
+                            <span class="text-teal-600 font-bold text-xl">➔</span>
+
+                            <div class="bg-white p-3 rounded-xl border border-emerald-300 shadow-xs w-24">
+                                <div class="text-2xl">🐸</div>
+                                <div class="text-xs font-bold text-emerald-900">Katak</div>
+                                <div class="text-[10px] text-slate-500">Konsumen II</div>
+                            </div>
+
+                            <span class="text-teal-600 font-bold text-xl">➔</span>
+
+                            <div class="bg-white p-3 rounded-xl border border-emerald-300 shadow-xs w-24">
+                                <div class="text-2xl">🐍</div>
+                                <div class="text-xs font-bold text-emerald-900">Ular</div>
+                                <div class="text-[10px] text-slate-500">Konsumen III</div>
+                            </div>
+
+                            <span class="text-teal-600 font-bold text-xl">➔</span>
+
+                            <div class="bg-white p-3 rounded-xl border border-emerald-300 shadow-xs w-24">
+                                <div class="text-2xl">🍄</div>
+                                <div class="text-xs font-bold text-emerald-900">Jamur</div>
+                                <div class="text-[10px] text-slate-500">Pengurai</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 8: MATERI 4 - KESEIMBANGAN EKOSISTEM -->
+            <section id="slide-8" class="slide">
+                <div class="space-y-5">
+                    <div class="border-b border-eco-200 pb-3 flex justify-between items-end">
+                        <div>
+                            <span class="text-xs font-bold text-eco-600 uppercase tracking-widest">Materi Inti 4/4</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Keseimbangan Ekosistem</h2>
+                        </div>
+                        <span class="bg-lime-100 text-lime-800 text-xs font-bold px-3 py-1 rounded-full">Pelestarian Alam</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-red-50 border border-red-200 p-5 rounded-2xl space-y-3">
+                            <h3 class="font-bold text-red-900 text-lg flex items-center space-x-2">
+                                <span>⚠️</span>
+                                <span>Penyebab Gangguan Ekosistem</span>
+                            </h3>
+                            <ul class="text-xs md:text-sm text-slate-700 space-y-2 list-disc list-inside">
+                                <li>Penebangan pohon secara liar di hutan.</li>
+                                <li>Perburuan liar hewan predator (seperti ular/elang).</li>
+                                <li>Pencemaran sampah plastik dan limbah kimia.</li>
+                                <li>Bencana alam seperti gunung meletus atau banjir.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-eco-50 border border-eco-200 p-5 rounded-2xl space-y-3">
+                            <h3 class="font-bold text-eco-900 text-lg flex items-center space-x-2">
+                                <span>🌱</span>
+                                <span>Peran Manusia Menjaga Ekosistem</span>
+                            </h3>
+                            <ul class="text-xs md:text-sm text-slate-700 space-y-2 list-disc list-inside">
+                                <li>Melakukan reboisasi (penanaman kembali).</li>
+                                <li>Membuang sampah pada tempatnya dan mendaur ulang.</li>
+                                <li>Melindungi hewan dan tumbuhan langka di suaka alam.</li>
+                                <li>Menggunakan pupuk organik alami.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 9: VIDEO PEMBELAJARAN -->
+            <section id="slide-9" class="slide">
+                <div class="space-y-5">
+                    <div class="border-b border-eco-200 pb-3">
+                        <span class="text-xs font-bold text-red-600 uppercase tracking-widest">Media Audio Visual</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Video Pembelajaran Ekosistem</h2>
+                    </div>
+
+                    <!-- Embedded YouTube Player -->
+                    <div class="aspect-video w-full max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-lg border-2 border-eco-200 bg-black">
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/ThxJOMUCYds" title="Video Pembelajaran Ekosistem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl max-w-3xl mx-auto text-xs md:text-sm text-slate-600">
+                        <p class="font-bold text-slate-800">💡 Petunjuk Pembelajaran:</p>
+                        <p>Simaklah video di atas dengan cermat untuk memperkuat pemahamanmu mengenai keterkaitan komponen biotik dan abiotik dalam rantai makanan sebelum mencoba simulasi dan permainan!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 10: SIMULASI INTERAKTIF -->
+            <section id="slide-10" class="slide">
+                <div class="space-y-5">
+                    <div class="border-b border-eco-200 pb-3">
+                        <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Laboratorium Interaktif</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Simulasi Populasi Ekosistem</h2>
+                    </div>
+
+                    <p class="text-xs md:text-sm text-slate-600">
+                        Geser kontrol di bawah ini untuk melihat bagaimana perubahan jumlah populasi <strong>Predator (Ular)</strong> mempengaruhi jumlah <strong>Mangsa (Kelinci)</strong> dan <strong>Rumput</strong>!
+                    </p>
+
+                    <div class="bg-purple-50 p-6 rounded-3xl border border-purple-200 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <!-- Controls -->
+                        <div class="space-y-4 bg-white p-5 rounded-2xl border border-purple-100 shadow-xs">
+                            <div>
+                                <label class="text-xs font-bold text-purple-900 flex justify-between">
+                                    <span>🐍 Jumlah Ular (Predator):</span>
+                                    <span id="predatorVal" class="text-purple-600 font-extrabold text-sm">5 ekor</span>
+                                </label>
+                                <input type="range" id="predatorSlider" min="1" max="10" value="5" class="w-full accent-purple-600 mt-2 cursor-pointer" oninput="updateSimulation()">
+                            </div>
+
+                            <div class="text-xs text-slate-600 space-y-1 bg-purple-50 p-3 rounded-xl">
+                                <p class="font-bold text-purple-900">Kondisi Ekosistem Saat Ini:</p>
+                                <p id="simStatus">Ekosistem berada dalam kondisi **Seimbang**.</p>
+                            </div>
+                        </div>
+
+                        <!-- Visual Simulation Display -->
+                        <div class="bg-white p-5 rounded-2xl border border-purple-100 shadow-xs space-y-4">
+                            <!-- Grass Level -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold">
+                                    <span>🌱 Rumput (Produsen)</span>
+                                    <span id="grassCountText" class="text-green-600">100%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden">
+                                    <div id="grassBar" class="bg-green-500 h-full transition-all duration-500" style="width: 70%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Rabbit Level -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold">
+                                    <span>🐰 Kelinci (Konsumen I)</span>
+                                    <span id="rabbitCountText" class="text-amber-600">50 ekor</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden">
+                                    <div id="rabbitBar" class="bg-amber-500 h-full transition-all duration-500" style="width: 50%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Snake Level -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs font-bold">
+                                    <span>🐍 Ular (Konsumen II)</span>
+                                    <span id="snakeCountText" class="text-purple-600">5 ekor</span>
+                                </div>
+                                <div class="w-full bg-slate-100 h-4 rounded-full overflow-hidden">
+                                    <div id="snakeBar" class="bg-purple-600 h-full transition-all duration-500" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 11: MINI GAME EDUKASI HUB -->
+            <section id="slide-11" class="slide">
+                <div class="space-y-4">
+                    <div class="border-b border-eco-200 pb-2 flex flex-col md:flex-row md:items-center justify-between gap-2">
+                        <div>
+                            <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">Aktivitas Bermain</span>
+                            <h2 class="text-2xl font-bold text-eco-900 font-friendly">Arena Mini Game Edukasi</h2>
+                        </div>
+                        
+                        <!-- Mini Game Navigation Tabs -->
+                        <div class="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-xl">
+                            <button onclick="switchGameTab('game1')" id="tab-game1" class="tab-btn active text-xs font-bold px-3 py-1.5 rounded-lg bg-orange-500 text-white shadow-xs">1. Drag & Drop</button>
+                            <button onclick="switchGameTab('game2')" id="tab-game2" class="tab-btn text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white">2. Drag Words</button>
+                            <button onclick="switchGameTab('game3')" id="tab-game3" class="tab-btn text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white">3. Isian Paragraf</button>
+                            <button onclick="switchGameTab('game4')" id="tab-game4" class="tab-btn text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white">4. Tebak Gambar</button>
+                            <button onclick="switchGameTab('game5')" id="tab-game5" class="tab-btn text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-white">5. Memory Game</button>
+                        </div>
+                    </div>
+
+                    <!-- GAME 1: DRAG & DROP PAIRING -->
+                    <div id="game-tab-1" class="game-content space-y-4">
+                        <p class="text-xs text-slate-600"><strong>Petunjuk Game 1:</strong> Pasangkan nama makhluk hidup ke dalam kategori peran yang tepat!</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Draggable Items -->
+                            <div class="bg-orange-50 p-4 rounded-2xl border border-orange-200">
+                                <h4 class="text-xs font-bold text-orange-800 uppercase mb-3">Pilihan Kartu:</h4>
+                                <div id="dragContainer1" class="flex flex-wrap gap-2">
+                                    <div draggable="true" ondragstart="dragStart(event)" id="item-padi" data-category="produsen" class="draggable-item bg-white px-3 py-2 rounded-xl border border-orange-300 shadow-xs text-xs font-bold text-slate-700">🌾 Pohon Padi</div>
+                                    <div draggable="true" ondragstart="dragStart(event)" id="item-kelinci" data-category="konsumen1" class="draggable-item bg-white px-3 py-2 rounded-xl border border-orange-300 shadow-xs text-xs font-bold text-slate-700">🐰 Kelinci</div>
+                                    <div draggable="true" ondragstart="dragStart(event)" id="item-elang" data-category="konsumen2" class="draggable-item bg-white px-3 py-2 rounded-xl border border-orange-300 shadow-xs text-xs font-bold text-slate-700">🦅 Burung Elang</div>
+                                    <div draggable="true" ondragstart="dragStart(event)" id="item-jamur" data-category="pengurai" class="draggable-item bg-white px-3 py-2 rounded-xl border border-orange-300 shadow-xs text-xs font-bold text-slate-700">🍄 Jamur Kayu</div>
+                                    <div draggable="true" ondragstart="dragStart(event)" id="item-air" data-category="abiotik" class="draggable-item bg-white px-3 py-2 rounded-xl border border-orange-300 shadow-xs text-xs font-bold text-slate-700">💧 Air Sungai</div>
+                                </div>
+                            </div>
+
+                            <!-- Drop Target Zones -->
+                            <div class="space-y-2">
+                                <div ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event, 'produsen')" class="drop-zone bg-slate-50 border-2 border-dashed border-slate-300 p-2.5 rounded-xl text-xs flex justify-between items-center min-h-[44px]">
+                                    <span class="font-bold text-slate-500">1. Produsen:</span>
+                                    <div class="dropped-area font-bold text-emerald-700"></div>
+                                </div>
+
+                                <div ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event, 'konsumen1')" class="drop-zone bg-slate-50 border-2 border-dashed border-slate-300 p-2.5 rounded-xl text-xs flex justify-between items-center min-h-[44px]">
+                                    <span class="font-bold text-slate-500">2. Konsumen I (Herbivora):</span>
+                                    <div class="dropped-area font-bold text-emerald-700"></div>
+                                </div>
+
+                                <div ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event, 'konsumen2')" class="drop-zone bg-slate-50 border-2 border-dashed border-slate-300 p-2.5 rounded-xl text-xs flex justify-between items-center min-h-[44px]">
+                                    <span class="font-bold text-slate-500">3. Konsumen II/Predator:</span>
+                                    <div class="dropped-area font-bold text-emerald-700"></div>
+                                </div>
+
+                                <div ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event, 'pengurai')" class="drop-zone bg-slate-50 border-2 border-dashed border-slate-300 p-2.5 rounded-xl text-xs flex justify-between items-center min-h-[44px]">
+                                    <span class="font-bold text-slate-500">4. Pengurai (Dekomposer):</span>
+                                    <div class="dropped-area font-bold text-emerald-700"></div>
+                                </div>
+
+                                <div ondragover="allowDrop(event)" ondragleave="dragLeave(event)" ondrop="dropItem(event, 'abiotik')" class="drop-zone bg-slate-50 border-2 border-dashed border-slate-300 p-2.5 rounded-xl text-xs flex justify-between items-center min-h-[44px]">
+                                    <span class="font-bold text-slate-500">5. Komponen Abiotik:</span>
+                                    <div class="dropped-area font-bold text-emerald-700"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="game1Feedback" class="text-xs font-bold text-center h-4"></div>
+                    </div>
+
+                    <!-- GAME 2: DRAG THE WORDS PARAGRAPH -->
+                    <div id="game-tab-2" class="game-content hidden space-y-4">
+                        <p class="text-xs text-slate-600"><strong>Petunjuk Game 2:</strong> Tarik kata-kata di dalam kotak ke tempat yang kosong pada paragraf!</p>
+                        
+                        <div class="flex flex-wrap gap-2 bg-orange-50 p-3 rounded-xl border border-orange-200">
+                            <span draggable="true" ondragstart="dragWordStart(event)" id="w-biotik" class="draggable-item bg-white px-3 py-1 rounded-lg border border-orange-300 text-xs font-bold text-orange-900">biotik</span>
+                            <span draggable="true" ondragstart="dragWordStart(event)" id="w-produsen" class="draggable-item bg-white px-3 py-1 rounded-lg border border-orange-300 text-xs font-bold text-orange-900">produsen</span>
+                            <span draggable="true" ondragstart="dragWordStart(event)" id="w-energi" class="draggable-item bg-white px-3 py-1 rounded-lg border border-orange-300 text-xs font-bold text-orange-900">energi</span>
+                            <span draggable="true" ondragstart="dragWordStart(event)" id="w-pengurai" class="draggable-item bg-white px-3 py-1 rounded-lg border border-orange-300 text-xs font-bold text-orange-900">pengurai</span>
+                            <span draggable="true" ondragstart="dragWordStart(event)" id="w-seimbang" class="draggable-item bg-white px-3 py-1 rounded-lg border border-orange-300 text-xs font-bold text-orange-900">seimbang</span>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs md:text-sm leading-relaxed space-y-2">
+                            <p>
+                                Ekosistem terdiri atas komponen abiotik dan komponen 
+                                <span ondragover="allowDrop(event)" ondrop="dropWord(event, 'biotik')" class="word-target inline-block bg-slate-100 border-b-2 border-orange-500 px-3 py-0.5 mx-1 font-bold text-eco-700 min-w-[70px] text-center">...</span>. 
+                                Tumbuhan hijau berperan sebagai 
+                                <span ondragover="allowDrop(event)" ondrop="dropWord(event, 'produsen')" class="word-target inline-block bg-slate-100 border-b-2 border-orange-500 px-3 py-0.5 mx-1 font-bold text-eco-700 min-w-[70px] text-center">...</span> 
+                                yang menghasilkan makanan. Proses makan memakan menyalurkan 
+                                <span ondragover="allowDrop(event)" ondrop="dropWord(event, 'energi')" class="word-target inline-block bg-slate-100 border-b-2 border-orange-500 px-3 py-0.5 mx-1 font-bold text-eco-700 min-w-[70px] text-center">...</span> 
+                                antar makhluk hidup. Ketika organisme mati, tubuhnya diurai oleh 
+                                <span ondragover="allowDrop(event)" ondrop="dropWord(event, 'pengurai')" class="word-target inline-block bg-slate-100 border-b-2 border-orange-500 px-3 py-0.5 mx-1 font-bold text-eco-700 min-w-[70px] text-center">...</span>. 
+                                Ekosistem akan tetap 
+                                <span ondragover="allowDrop(event)" ondrop="dropWord(event, 'seimbang')" class="word-target inline-block bg-slate-100 border-b-2 border-orange-500 px-3 py-0.5 mx-1 font-bold text-eco-700 min-w-[70px] text-center">...</span> 
+                                jika lingkungan terjaga.
+                            </p>
+                        </div>
+                        <button onclick="checkGame2()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-xs">Periksa Jawaban Game 2</button>
+                        <span id="game2Result" class="text-xs font-bold ml-2"></span>
+                    </div>
+
+                    <!-- GAME 3: FILL THE WORDS PARAGRAPH -->
+                    <div id="game-tab-3" class="game-content hidden space-y-4">
+                        <p class="text-xs text-slate-600"><strong>Petunjuk Game 3:</strong> Ketiklah kata yang tepat untuk melengkapi paragraf di bawah ini!</p>
+                        
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 text-xs md:text-sm leading-relaxed space-y-3">
+                            <p>
+                                Matahari adalah sumber <input type="text" id="g3-1" data-ans="energi" class="border-b-2 border-orange-500 bg-orange-50/50 px-2 py-0.5 w-28 font-bold text-center focus:outline-none" placeholder="1. ..."> utama bagi ekosistem. Tumbuhan memanfaatkan sinar matahari untuk melakukan proses <input type="text" id="g3-2" data-ans="fotosintesis" class="border-b-2 border-orange-500 bg-orange-50/50 px-2 py-0.5 w-32 font-bold text-center focus:outline-none" placeholder="2. ...">. Hewan pemakan tumbuhan disebut <input type="text" id="g3-3" data-ans="herbivora" class="border-b-2 border-orange-500 bg-orange-50/50 px-2 py-0.5 w-28 font-bold text-center focus:outline-none" placeholder="3. ...">, sedangkan hewan pemakan daging disebut <input type="text" id="g3-4" data-ans="karnivora" class="border-b-2 border-orange-500 bg-orange-50/50 px-2 py-0.5 w-28 font-bold text-center focus:outline-none" placeholder="4. ...">. Sampah organik dan sisa makhluk hidup akan diubah menjadi zat hara oleh <input type="text" id="g3-5" data-ans="bakteri" class="border-b-2 border-orange-500 bg-orange-50/50 px-2 py-0.5 w-28 font-bold text-center focus:outline-none" placeholder="5. ..."> / jamur.
+                            </p>
+                        </div>
+
+                        <button onclick="checkGame3()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-xs">Periksa Jawaban Game 3</button>
+                        <span id="game3Result" class="text-xs font-bold ml-2"></span>
+                    </div>
+
+                    <!-- GAME 4: TEBAK GAMBAR -->
+                    <div id="game-tab-4" class="game-content hidden space-y-4">
+                        <p class="text-xs text-slate-600"><strong>Petunjuk Game 4:</strong> Tebaklah peran atau komponen dari simbol/gambar berikut!</p>
+
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 max-w-xl mx-auto space-y-4">
+                            <div class="text-center">
+                                <span id="g4-img" class="text-6xl">🦅</span>
+                                <h4 id="g4-title" class="font-bold text-slate-800 text-sm mt-2">Soal 1 / 5: Burung Elang berperan sebagai?</h4>
+                            </div>
+
+                            <div id="g4-options" class="grid grid-cols-2 gap-2">
+                                <!-- Options dynamically rendered -->
+                            </div>
+                            <div id="g4-feedback" class="text-xs font-bold text-center h-4"></div>
+                        </div>
+                    </div>
+
+                    <!-- GAME 5: MEMORY GAME -->
+                    <div id="game-tab-5" class="game-content hidden space-y-4">
+                        <p class="text-xs text-slate-600"><strong>Petunjuk Game 5:</strong> Temukan 5 pasangan kartu yang cocok antara Makhluk Hidup & Perannya!</p>
+                        
+                        <div id="memoryGrid" class="grid grid-cols-5 gap-2 max-w-xl mx-auto">
+                            <!-- Memory Cards rendered via JS -->
+                        </div>
+                        <div id="memoryStatus" class="text-xs font-bold text-center text-eco-700"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 12: KUIS INTERAKTIF -->
+            <section id="slide-12" class="slide">
+                <div class="space-y-4">
+                    <div class="border-b border-eco-200 pb-2 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-yellow-600 uppercase tracking-widest">Evaluasi Pemahaman</span>
+                            <h2 class="text-2xl font-bold text-eco-900 font-friendly">Kuis Ekosistem (10 Soal)</h2>
+                        </div>
+                        <div class="text-xs font-bold bg-yellow-100 text-yellow-900 px-3 py-1 rounded-full">
+                            Skor: <span id="quizScoreText">0</span> / 100
+                        </div>
+                    </div>
+
+                    <!-- Quiz Question Container -->
+                    <div class="bg-yellow-50/60 p-5 rounded-2xl border border-yellow-200 min-h-[320px] flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center text-xs text-yellow-800 font-bold">
+                                <span id="quizQNum">Soal 1 dari 10</span>
+                                <span id="quizQType" class="bg-yellow-200 px-2.5 py-0.5 rounded-full">Pilihan Ganda</span>
+                            </div>
+                            
+                            <h3 id="quizQText" class="text-sm md:text-base font-bold text-slate-800">
+                                Loading Question...
+                            </h3>
+
+                            <!-- Options Container -->
+                            <div id="quizOptions" class="space-y-2 pt-2">
+                                <!-- Dynamic options -->
+                            </div>
+                        </div>
+
+                        <!-- Feedback area -->
+                        <div id="quizFeedback" class="p-3 rounded-xl text-xs font-medium hidden"></div>
+
+                        <!-- Quiz Action Button -->
+                        <div class="flex justify-end pt-2">
+                            <button id="nextQuizBtn" onclick="nextQuestion()" class="bg-eco-600 hover:bg-eco-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-xs hidden">
+                                Soal Berikutnya ➔
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 13: RANGKUMAN -->
+            <section id="slide-13" class="slide">
+                <div class="space-y-6">
+                    <div class="border-b border-eco-200 pb-3">
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Ikhtisar Belajar</span>
+                        <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Rangkuman Ringkas</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-2xl space-y-1">
+                            <h3 class="font-bold text-indigo-900 text-sm">📌 Komponen Ekosistem</h3>
+                            <p class="text-xs text-slate-600">Terdiri atas komponen Biotik (makhluk hidup) dan Abiotik (benda tak hidup) yang saling berinteraksi secara seimbang.</p>
+                        </div>
+
+                        <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl space-y-1">
+                            <h3 class="font-bold text-emerald-900 text-sm">📌 Peran Organisme</h3>
+                            <p class="text-xs text-slate-600">Tumbuhan sebagai Produsen, hewan sebagai Konsumen (I, II, III), dan mikroorganisme/jamur sebagai Pengurai.</p>
+                        </div>
+
+                        <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl space-y-1">
+                            <h3 class="font-bold text-amber-900 text-sm">📌 Aliran Energi</h3>
+                            <p class="text-xs text-slate-600">Rantai makanan menggambarkan perpindahan energi dari produsen ke konsumen hingga pengurai dalam suatu urutan.</p>
+                        </div>
+
+                        <div class="bg-teal-50 border border-teal-200 p-4 rounded-2xl space-y-1">
+                            <h3 class="font-bold text-teal-900 text-sm">📌 Menjaga Alam</h3>
+                            <p class="text-xs text-slate-600">Kelestarian ekosistem membutuhkan peran aktif manusia melalui reboisasi, pencegahan perburuan liar, dan perlindungan lingkungan.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 14: REFERENSI & PENUTUP -->
+            <section id="slide-14" class="slide">
+                <div class="space-y-6 text-center max-w-2xl mx-auto my-auto">
+                    <div class="w-16 h-16 bg-eco-100 text-eco-700 rounded-full flex items-center justify-center text-3xl mx-auto border-2 border-eco-300">
+                        🎓
+                    </div>
+
+                    <h2 class="text-2xl md:text-3xl font-bold text-eco-900 font-friendly">Terima Kasih & Selamat Belajar!</h2>
+
+                    <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                        Semoga media pembelajaran interaktif ini membantu peserta didik memahami topik <strong>Harmoni dalam Ekosistem</strong> dengan cara yang menyenangkan dan bermakna.
+                    </p>
+
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl text-left text-xs space-y-2">
+                        <p class="font-bold text-slate-800">📚 Referensi & Rujukan Kurikulum:</p>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Buku Panduan Guru IPAS Kelas V SD - Kurikulum Merdeka (Kementerian Pendidikan dan Kebudayaan).</li>
+                            <li>Buku Siswa IPAS Kelas V SD Bab 2: Harmoni dalam Ekosistem.</li>
+                            <li>Video Edukasi Ekosistem YouTube (Kanal Pendidikan Pembelajaran SD).</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-eco-600 text-white p-4 rounded-2xl shadow-md">
+                        <p class="text-xs font-semibold">Dikembangkan oleh:</p>
+                        <p class="text-lg font-bold font-friendly">Alisya Ananda, S.Pd</p>
+                        <p class="text-[11px] text-eco-100">Guru IPAS Sekolah Dasar</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Slide Controls Bar (Always Visible Slides 3 to 14) -->
+            <footer id="slideNavFooter" class="pt-4 border-t border-slate-100 flex justify-between items-center mt-4">
+                <button id="prevBtn" onclick="changeSlide(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-2 transition">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <span>Sebelumnya</span>
+                </button>
+
+                <!-- Back to Menu Button -->
+                <button id="menuNavBtn" onclick="goToSlide(2)" class="bg-eco-100 hover:bg-eco-200 text-eco-800 text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-1 transition">
+                    <i class="fa-solid fa-grid-2"></i>
+                    <span>Menu Utama</span>
+                </button>
+
+                <button id="nextBtn" onclick="changeSlide(1)" class="bg-eco-600 hover:bg-eco-700 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-2 transition shadow-xs">
+                    <span>Berikutnya</span>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </footer>
+        </div>
+    </main>
+
+    <!-- Quiz Result Modal -->
+    <div id="quizResultModal" class="fixed inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full text-center space-y-4 shadow-2xl border border-eco-200 transform animate-bounce-short">
+            <div id="quizStars" class="text-4xl">⭐⭐⭐</div>
+            <h3 class="text-2xl font-bold text-slate-800 font-friendly">Hasil Evaluasi Kuis</h3>
+            <div class="text-4xl font-extrabold text-eco-600" id="modalScoreText">0</div>
+            <p id="modalMotivation" class="text-xs md:text-sm text-slate-600">Pesan motivasi akan tampil di sini!</p>
+            <div class="pt-2 flex justify-center space-x-3">
+                <button onclick="restartQuiz()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl">Ulangi Kuis</button>
+                <button onclick="closeQuizModal(); goToSlide(13);" class="bg-eco-600 hover:bg-eco-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl">Lihat Rangkuman</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Slide Navigation Logic
+        let currentSlide = 1;
+        const totalSlides = 14;
+
+        function updateSlideView() {
+            // Hide all slides
+            for (let i = 1; i <= totalSlides; i++) {
+                const el = document.getElementById(`slide-${i}`);
+                if (el) el.classList.remove('active');
+            }
+
+            // Show current slide
+            const activeEl = document.getElementById(`slide-${currentSlide}`);
+            if (activeEl) activeEl.classList.add('active');
+
+            // Update Indicator
+            document.getElementById('slideIndicator').innerText = `Halaman ${currentSlide} / ${totalSlides}`;
+
+            // Button state adjustments
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const menuBtn = document.getElementById('menuNavBtn');
+
+            if (currentSlide === 1) {
+                prevBtn.classList.add('invisible');
+                menuBtn.classList.add('invisible');
+            } else {
+                prevBtn.classList.remove('invisible');
+                menuBtn.classList.remove('invisible');
+            }
+
+            if (currentSlide === totalSlides) {
+                nextBtn.classList.add('invisible');
+            } else {
+                nextBtn.classList.remove('invisible');
+            }
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 1) currentSlide = 1;
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+            updateSlideView();
+        }
+
+        function goToSlide(slideNum) {
+            currentSlide = slideNum;
+            updateSlideView();
+        }
+
+        // Fullscreen Toggle
+        function toggleFullscreen() {
+            const icon = document.getElementById('fullscreenIcon');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log("Fullscreen request failed");
+                });
+                icon.classList.remove('fa-expand');
+                icon.classList.add('fa-compress');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    icon.classList.remove('fa-compress');
+                    icon.classList.add('fa-expand');
+                }
+            }
+        }
+
+        // SLIDE 10 SIMULATION LOGIC
+        function updateSimulation() {
+            const snakes = parseInt(document.getElementById('predatorSlider').value);
+            document.getElementById('predatorVal').innerText = `${snakes} ekor`;
+            document.getElementById('snakeCountText').innerText = `${snakes} ekor`;
+            document.getElementById('snakeBar').style.width = `${snakes * 10}%`;
+
+            // Calculate impact
+            // More snakes = less rabbits = more grass
+            const rabbits = Math.max(10, 100 - (snakes * 8));
+            const grass = Math.min(100, 30 + (snakes * 7));
+
+            document.getElementById('rabbitCountText').innerText = `${rabbits} ekor`;
+            document.getElementById('rabbitBar').style.width = `${rabbits}%`;
+
+            document.getElementById('grassCountText').innerText = `${grass}%`;
+            document.getElementById('grassBar').style.width = `${grass}%`;
+
+            const statusEl = document.getElementById('simStatus');
+            if (snakes >= 4 && snakes <= 7) {
+                statusEl.innerText = "Ekosistem berada dalam kondisi SEIMBANG! Populasi predator dan populasi mangsa terjaga.";
+                statusEl.className = "text-emerald-700 font-bold";
+            } else if (snakes > 7) {
+                statusEl.innerText = "Predator TERLALU BANYAK! Populasi kelinci menurun drastis, rumput tumbuh berlebihan.";
+                statusEl.className = "text-red-600 font-bold";
+            } else {
+                statusEl.innerText = "Predator TERLALU SEDIKIT! Populasi kelinci melonjak dan merusak rumput (produsen).";
+                statusEl.className = "text-amber-600 font-bold";
+            }
+        }
+
+        // SLIDE 11 GAME TABS SWITCHING
+        function switchGameTab(tabId) {
+            // Reset tab styles
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('bg-orange-500', 'text-white', 'shadow-xs');
+                b.classList.add('text-slate-600', 'hover:bg-white');
+            });
+            // Hide all game content
+            document.querySelectorAll('.game-content').forEach(c => c.classList.add('hidden'));
+
+            // Highlight active tab
+            const activeTabBtn = document.getElementById(`tab-${tabId}`);
+            activeTabBtn.classList.remove('text-slate-600', 'hover:bg-white');
+            activeTabBtn.classList.add('bg-orange-500', 'text-white', 'shadow-xs');
+
+            // Show selected game
+            const gameNum = tabId.replace('game', '');
+            document.getElementById(`game-tab-${gameNum}`).classList.remove('hidden');
+
+            if (tabId === 'game4' && g4CurrentIdx === 0) loadGame4Question();
+            if (tabId === 'game5' && !memoryInitialized) initMemoryGame();
+        }
+
+        // DRAG AND DROP GAME 1 LOGIC
+        function dragStart(ev) {
+            ev.dataTransfer.setData("text/plain", ev.target.id);
+        }
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add('hovered');
+        }
+        function dragLeave(ev) {
+            ev.currentTarget.classList.remove('hovered');
+        }
+        function dropItem(ev, expectedCategory) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('hovered');
+            const dataId = ev.dataTransfer.getData("text/plain");
+            const draggedEl = document.getElementById(dataId);
+            if (!draggedEl) return;
+
+            const actualCategory = draggedEl.getAttribute('data-category');
+            const targetArea = ev.currentTarget.querySelector('.dropped-area');
+
+            if (actualCategory === expectedCategory) {
+                targetArea.innerText = "✅ " + draggedEl.innerText;
+                draggedEl.style.display = 'none';
+                document.getElementById('game1Feedback').innerText = "Hebat! Pasangan Benar!";
+                document.getElementById('game1Feedback').className = "text-xs font-bold text-center text-emerald-600";
+            } else {
+                document.getElementById('game1Feedback').innerText = "Kurang tepat, coba kategori lainnya!";
+                document.getElementById('game1Feedback').className = "text-xs font-bold text-center text-red-500";
+            }
+        }
+
+        // DRAG WORDS GAME 2 LOGIC
+        function dragWordStart(ev) {
+            ev.dataTransfer.setData("text/plain", ev.target.innerText.trim());
+        }
+        function dropWord(ev, expectedWord) {
+            ev.preventDefault();
+            const draggedText = ev.dataTransfer.getData("text/plain");
+            if (draggedText === expectedWord) {
+                ev.target.innerText = draggedText;
+                ev.target.classList.add('bg-green-100', 'text-green-800');
+            } else {
+                alert("Kata kurang sesuai untuk kalimat ini!");
+            }
+        }
+        function checkGame2() {
+            const targets = document.querySelectorAll('.word-target');
+            let correct = 0;
+            targets.forEach(t => {
+                if (t.innerText !== '...') correct++;
+            });
+            const res = document.getElementById('game2Result');
+            if (correct === 5) {
+                res.innerText = "🎉 Luar Biasa! Semua kata pada paragraf tepat!";
+                res.className = "text-xs font-bold ml-2 text-emerald-600";
+            } else {
+                res.innerText = `Baru ${correct}/5 kata terisi. Lanjutkan!`;
+                res.className = "text-xs font-bold ml-2 text-amber-600";
+            }
+        }
+
+        // GAME 3 FILL WORDS LOGIC
+        function checkGame3() {
+            let score = 0;
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById(`g3-${i}`);
+                const val = input.value.trim().toLowerCase();
+                const expected = input.getAttribute('data-ans').toLowerCase();
+                if (val === expected) {
+                    input.classList.remove('border-orange-500', 'border-red-500');
+                    input.classList.add('border-green-500', 'bg-green-50');
+                    score++;
+                } else {
+                    input.classList.remove('border-orange-500', 'border-green-500');
+                    input.classList.add('border-red-500', 'bg-red-50');
+                }
+            }
+            const res = document.getElementById('game3Result');
+            if (score === 5) {
+                res.innerText = "🎉 Sempurna! Semua isian paragraf benar!";
+                res.className = "text-xs font-bold ml-2 text-emerald-600";
+            } else {
+                res.innerText = `${score}/5 Benar. Periksa kembali kotak bertanda merah.`;
+                res.className = "text-xs font-bold ml-2 text-red-500";
+            }
+        }
+
+        // GAME 4 TEBAK GAMBAR LOGIC
+        const g4Questions = [
+            { img: "🦅", q: "1. Burung Elang berperan sebagai apa dalam ekosistem?", opts: ["Produsen", "Konsumen II (Predator)", "Pengurai", "Abiotik"], ans: 1 },
+            { img: "🌻", q: "2. Bunga Matahari berperan sebagai?", opts: ["Produsen", "Konsumen I", "Konsumen II", "Pengurai"], ans: 0 },
+            { img: "🍄", q: "3. Jamur menguraikan sisa organisme mati sebagai?", opts: ["Produsen", "Herbivora", "Pengurai (Dekomposer)", "Abiotik"], ans: 2 },
+            { img: "☀️", q: "4. Sinar Matahari termasuk ke dalam komponen?", opts: ["Biotik", "Abiotik", "Produsen", "Konsumen"], ans: 1 },
+            { img: "🦗", q: "5. Belalang yang memakan rumput berperan sebagai?", opts: ["Produsen", "Konsumen I (Herbivora)", "Pengurai", "Karnivora"], ans: 1 }
+        ];
+        let g4CurrentIdx = 0;
+
+        function loadGame4Question() {
+            const q = g4Questions[g4CurrentIdx];
+            document.getElementById('g4-img').innerText = q.img;
+            document.getElementById('g4-title').innerText = q.q;
+            const optsContainer = document.getElementById('g4-options');
+            optsContainer.innerHTML = '';
+
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "bg-white hover:bg-orange-100 border border-slate-300 p-2.5 rounded-xl text-xs font-bold text-slate-700 transition";
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    const fb = document.getElementById('g4-feedback');
+                    if (idx === q.ans) {
+                        fb.innerText = "Benar! Bagus sekali!";
+                        fb.className = "text-xs font-bold text-center text-emerald-600 h-4";
+                        setTimeout(() => {
+                            g4CurrentIdx = (g4CurrentIdx + 1) % g4Questions.length;
+                            loadGame4Question();
+                        }, 1200);
+                    } else {
+                        fb.innerText = "Kurang tepat, coba lagi!";
+                        fb.className = "text-xs font-bold text-center text-red-500 h-4";
+                    }
+                };
+                optsContainer.appendChild(btn);
+            });
+            document.getElementById('g4-feedback').innerText = "";
+        }
+
+        // GAME 5 MEMORY GAME LOGIC
+        const memoryItems = [
+            { id: 1, text: "🌾 Padi", match: 1 },
+            { id: 2, text: "Produsen", match: 1 },
+            { id: 3, text: "🐰 Kelinci", match: 2 },
+            { id: 4, text: "Konsumen I", match: 2 },
+            { id: 5, text: "🐍 Ular", match: 3 },
+            { id: 6, text: "Konsumen II", match: 3 },
+            { id: 7, text: "🍄 Jamur", match: 4 },
+            { id: 8, text: "Pengurai", match: 4 },
+            { id: 9, text: "☀️ Matahari", match: 5 },
+            { id: 10, text: "Abiotik", match: 5 }
+        ];
+        let memoryInitialized = false;
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function initMemoryGame() {
+            memoryInitialized = true;
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            // Shuffle
+            const shuffled = [...memoryItems].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "memory-card h-20 cursor-pointer";
+                card.dataset.match = item.match;
+
+                card.innerHTML = `
+                    <div class="memory-card-inner w-full h-full relative border border-orange-300 rounded-xl shadow-xs">
+                        <div class="memory-card-front absolute inset-0 bg-orange-400 rounded-xl flex items-center justify-center text-white font-bold text-lg">❓</div>
+                        <div class="memory-card-back absolute inset-0 bg-white rounded-xl flex items-center justify-center p-1 text-center font-bold text-xs text-orange-900 border-2 border-orange-400">
+                            ${item.text}
+                        </div>
+                    </div>
+                `;
+
+                card.onclick = () => {
+                    if (card.classList.contains('flipped') || flippedCards.length >= 2) return;
+                    card.classList.add('flipped');
+                    flippedCards.push(card);
+
+                    if (flippedCards.length === 2) {
+                        const [c1, c2] = flippedCards;
+                        if (c1.dataset.match === c2.dataset.match) {
+                            matchedPairs++;
+                            flippedCards = [];
+                            if (matchedPairs === 5) {
+                                document.getElementById('memoryStatus').innerText = "🏆 Selamat! Kamu berhasil menemukan semua pasangan!";
+                            }
+                        } else {
+                            setTimeout(() => {
+                                c1.classList.remove('flipped');
+                                c2.classList.remove('flipped');
+                                flippedCards = [];
+                            }, 1000);
+                        }
+                    }
+                };
+
+                grid.appendChild(card);
+            });
+        }
+
+        // SLIDE 12 KUIS INTERAKTIF LOGIC (10 Questions)
+        const quizQuestions = [
+            // 5 PG
+            { type: "pg", q: "1. Komponen tak hidup seperti tanah, air, dan udara dinamakan komponen...?", opts: ["Biotik", "Abiotik", "Organik", "Ekosistem"], ans: 1, exp: "Abiotik adalah seluruh komponen tak hidup di alam." },
+            { type: "pg", q: "2. Makhluk hidup yang memproduksi makanannya sendiri melalui fotosintesis adalah...?", opts: ["Pengurai", "Konsumen", "Produsen", "Predator"], ans: 2, exp: "Tumbuhan hijau berperan sebagai produsen." },
+            { type: "pg", q: "3. Katak yang memakan belalang di sawah berperan sebagai...?", opts: ["Konsumen I", "Konsumen II", "Produsen", "Pengurai"], ans: 1, exp: "Katak memakan pemakan tumbuhan (belalang), sehingga menjadi Konsumen II." },
+            { type: "pg", q: "4. Apa yang akan terjadi jika populasi ular di sawah diburu hingga habis?", opts: ["Populasi tikus meningkat tajam", "Padi semakin subur", "Populasi elang meningkat", "Tidak terjadi apa-apa"], ans: 0, exp: "Tanpa ular (predator), populasi tikus (mangsa) akan berkembang pesat membakar padi." },
+            { type: "pg", q: "5. Peran jamur dan bakteri dalam ekosistem adalah...?", opts: ["Membuat makanan sendiri", "Memangsa konsumen II", "Menguraikan bangkai menjadi zat hara", "Menghasilkan oksigen"], ans: 2, exp: "Jamur & bakteri menguraikan sisa organisme mati menjadi nutrisi tanah." },
+            // 3 Drag/Matching (simulated via multiple choices format for interactive simplicity)
+            { type: "drag", q: "6. Jodohkan: Manakah pasangan Produsen dan Konsumen I yang tepat di laut?", opts: ["Fitoplankton -> Udang kecil", "Hiu -> Ikan Kecil", "Batu -> Air", "Rumput laut -> Paus Pembunuh"], ans: 0, exp: "Fitoplankton adalah produsen laut dan dimakan udang kecil (Konsumen I)." },
+            { type: "drag", q: "7. Jodohkan: Komponen manakah yang tergolong Komponen Abiotik?", opts: ["Pohon Pinus & Cacing", "Cahaya Matahari & Tanah", "Burung & Ular", "Bakteri & Jamur"], ans: 1, exp: "Cahaya matahari & tanah adalah komponen abiotik (benda tak hidup)." },
+            { type: "drag", q: "8. Urutan Rantai Makanan yang benar adalah...?", opts: ["Padi -> Ular -> Katak", "Rumput -> Kelinci -> Serigala", "Pengurai -> Produsen -> Konsumen", "Elang -> Padi -> Ular"], ans: 1, exp: "Rumput (Produsen) -> Kelinci (Konsumen I) -> Serigala (Konsumen II)." },
+            // 2 Benar / Salah
+            { type: "tf", q: "9. BENAR atau SALAH: Reboisasi (penanaman kembali hutan) dapat merusak keseimbangan ekosistem.", opts: ["Benar", "Salah"], ans: 1, exp: "Salah! Reboisasi justru membantu menjaga dan memulihkan ekosistem." },
+            { type: "tf", q: "10. BENAR atau SALAH: Tanpa energi cahaya matahari, tumbuhan hijau tidak bisa berfotosintesis.", opts: ["Benar", "Salah"], ans: 0, exp: "Benar! Sinar matahari adalah sumber energi utama fotosintesis." }
+        ];
+
+        let quizIndex = 0;
+        let quizScore = 0;
+
+        function loadQuizQuestion() {
+            const q = quizQuestions[quizIndex];
+            document.getElementById('quizQNum').innerText = `Soal ${quizIndex + 1} dari 10`;
+            document.getElementById('quizQType').innerText = q.type === 'pg' ? 'Pilihan Ganda' : (q.type === 'drag' ? 'Pasangan Kategori' : 'Benar / Salah');
+            document.getElementById('quizQText').innerText = q.q;
+
+            const optsDiv = document.getElementById('quizOptions');
+            optsDiv.innerHTML = '';
+
+            const feedbackEl = document.getElementById('quizFeedback');
+            feedbackEl.classList.add('hidden');
+            document.getElementById('nextQuizBtn').classList.add('hidden');
+
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-white hover:bg-yellow-100 border border-yellow-300 p-3 rounded-xl text-xs md:text-sm font-semibold text-slate-700 transition flex justify-between items-center";
+                btn.innerHTML = `<span>${opt}</span><i class="fa-regular fa-circle text-yellow-500"></i>`;
+                
+                btn.onclick = () => {
+                    // Disable all buttons
+                    const allBtns = optsDiv.querySelectorAll('button');
+                    allBtns.forEach(b => b.disabled = true);
+
+                    if (idx === q.ans) {
+                        btn.className = "w-full text-left bg-green-100 border-2 border-green-500 p-3 rounded-xl text-xs md:text-sm font-bold text-green-900 flex justify-between items-center";
+                        btn.innerHTML = `<span>${opt}</span><i class="fa-solid fa-circle-check text-green-600"></i>`;
+                        quizScore += 10;
+                        document.getElementById('quizScoreText').innerText = quizScore;
+                        feedbackEl.className = "p-3 rounded-xl text-xs font-medium bg-green-100 text-green-900 border border-green-300";
+                        feedbackEl.innerText = `✅ Jawaban Benar! ${q.exp}`;
+                    } else {
+                        btn.className = "w-full text-left bg-red-100 border-2 border-red-500 p-3 rounded-xl text-xs md:text-sm font-bold text-red-900 flex justify-between items-center";
+                        btn.innerHTML = `<span>${opt}</span><i class="fa-solid fa-circle-xmark text-red-600"></i>`;
+                        feedbackEl.className = "p-3 rounded-xl text-xs font-medium bg-red-100 text-red-900 border border-red-300";
+                        feedbackEl.innerText = `❌ Kurang Tepat! Jawaban yang benar: ${q.opts[q.ans]}. ${q.exp}`;
+                    }
+                    feedbackEl.classList.remove('hidden');
+                    document.getElementById('nextQuizBtn').classList.remove('hidden');
+                };
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function nextQuestion() {
+            quizIndex++;
+            if (quizIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('modalScoreText').innerText = quizScore;
+            const stars = document.getElementById('quizStars');
+            const mot = document.getElementById('modalMotivation');
+
+            if (quizScore >= 80) {
+                stars.innerText = "⭐⭐⭐";
+                mot.innerText = "Luar Biasa! Kamu sudah sangat memahami materi Harmoni dalam Ekosistem!";
+            } else if (quizScore >= 60) {
+                stars.innerText = "⭐⭐";
+                mot.innerText = "Bagus Sekali! Pelajari lagi beberapa poin agar nilaimu semakin sempurna.";
+            } else {
+                stars.innerText = "⭐";
+                mot.innerText = "Jangan berkecil hati! Yuk baca ulang materi dan coba kuisnya kembali.";
+            }
+
+            document.getElementById('quizResultModal').classList.remove('hidden');
+        }
+
+        function restartQuiz() {
+            quizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quizScoreText').innerText = '0';
+            closeQuizModal();
+            loadQuizQuestion();
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quizResultModal').classList.add('hidden');
+        }
+
+        // Initialize App on Load
+        window.onload = function() {
+            updateSlideView();
+            updateSimulation();
+            loadQuizQuestion();
+        };
+    </script>
+</body>
+</html>
